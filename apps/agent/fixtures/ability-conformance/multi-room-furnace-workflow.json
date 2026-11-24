@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "multi-room-furnace-workflow",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "storage": {
+      "blockId": "minecraft:chest",
+      "position": { "x": 3, "y": 101, "z": 4 },
+      "contents": [
+        { "slot": 0, "itemId": "minecraft:raw_iron", "count": 2 },
+        { "slot": 1, "itemId": "minecraft:coal", "count": 2 }
+      ],
+      "initiallyVisible": false
+    },
+    "furnace": {
+      "blockId": "minecraft:furnace",
+      "position": { "x": 3, "y": 101, "z": -4 },
+      "contents": [
+        { "slot": 1, "itemId": "minecraft:oak_planks", "count": 1 }
+      ],
+      "initiallyVisible": false
+    }
+  },
+  "structureFixture": {
+    "id": "two-room-furnace",
+    "version": 1,
+    "origin": { "x": -5, "y": 100, "z": -6 }
+  }
+}

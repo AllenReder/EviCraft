@@ -1,0 +1,23 @@
+{
+  "type": "manual_spawn_adjustment",
+  "previousManifestRevision": "1",
+  "newManifestRevision": "2",
+  "previousSpawn": {
+    "dimension": "minecraft:overworld",
+    "x": -127.5,
+    "y": 73,
+    "z": -63.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": -132.5,
+    "y": 70,
+    "z": -63.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "reason": "The generated spawn stood on spruce leaves at y=72, with another leaf block at the ground-level feet position. Five blocks west has grass_block at y=69 and air at y=70 through y=72, with less nearby water; the manifest moves the Bot there without changing the world.",
+  "worldSha256Unchanged": "b7405b014e5c7fa669919f24cc0911c315853a89d2d7667c696e6b7483660438"
+}

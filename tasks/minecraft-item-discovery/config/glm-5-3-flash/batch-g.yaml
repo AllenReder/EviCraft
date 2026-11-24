@@ -1,0 +1,43 @@
+# G instances from batch.yaml.
+concurrency: 50
+instances:
+  - id: discovery-glm-5-3-flash-s100-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s100-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s101-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s101-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s102-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s102-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s103-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s103-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s104-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s104-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s105-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s105-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s106-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s106-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s107-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s107-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s108-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s108-g.json
+    repetitions: 5
+  - id: discovery-glm-5-3-flash-s109-g
+    taskPath: ../..
+    configPath: glm-5.3-flash-s109-g.json
+    repetitions: 5

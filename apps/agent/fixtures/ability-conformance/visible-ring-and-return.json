@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "visible-ring-and-return",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "hidden_marker": {
+      "blockId": "minecraft:emerald_block",
+      "position": { "x": 4, "y": 102, "z": 8 },
+      "initiallyVisible": false
+    },
+    "marker_support": {
+      "blockId": "minecraft:stone",
+      "position": { "x": 4, "y": 101, "z": 8 },
+      "initiallyVisible": false
+    }
+  },
+  "structureFixture": {
+    "id": "visible-ring-corridor",
+    "version": 1,
+    "origin": { "x": -6, "y": 100, "z": -6 }
+  }
+}

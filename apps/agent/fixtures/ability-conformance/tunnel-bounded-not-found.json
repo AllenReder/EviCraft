@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "tunnel-bounded-not-found",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {},
+  "structureFixture": {
+    "id": "four-step-stone-tunnel",
+    "version": 1,
+    "origin": { "x": 0, "y": 100, "z": -1 }
+  }
+}

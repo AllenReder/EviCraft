@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.mcagent.runtime.entity.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MenuDataSlotsAccessor",
+    "MixinServerCommonPacketListener"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

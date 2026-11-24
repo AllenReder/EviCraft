@@ -1,0 +1,12 @@
+.gradle/
+**/build/
+**/runs/
+**/run/
+**/logs/
+**/crash-reports/
+
+# Java packages named build are source, not Gradle output.
+!**/src/main/java/**/build/
+!**/src/main/java/**/build/**
+!**/src/test/java/**/build/
+!**/src/test/java/**/build/**

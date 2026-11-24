@@ -1,0 +1,43 @@
+# L instances from batch.yaml.
+concurrency: 50
+instances:
+  - id: survival-qwen-3-8-27b-s100-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s100-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s101-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s101-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s102-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s102-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s103-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s103-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s104-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s104-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s105-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s105-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s106-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s106-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s107-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s107-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s108-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s108-l.json
+    repetitions: 5
+  - id: survival-qwen-3-8-27b-s109-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s109-l.json
+    repetitions: 5

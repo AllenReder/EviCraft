@@ -1,0 +1,23 @@
+{
+  "type": "manual_spawn_adjustment",
+  "previousManifestRevision": "1",
+  "newManifestRevision": "2",
+  "previousSpawn": {
+    "dimension": "minecraft:overworld",
+    "x": -63.5,
+    "y": 80,
+    "z": 48.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": -63.5,
+    "y": 75,
+    "z": 48.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "reason": "The generated spawn stood on oak leaves at y=79. The same column has grass_block at y=74 and air at y=75 through y=77; the manifest moves the Bot's feet to y=75 without changing the world.",
+  "worldSha256Unchanged": "fafd3fd178a1b4d92c2dc9b2235576b48c69b4cf84810b7270942b278b864e84"
+}

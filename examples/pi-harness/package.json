@@ -1,0 +1,9 @@
+{
+  "name": "pi-harness-example",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@mariozechner/pi-agent-core": "0.73.1",
+    "@mariozechner/pi-ai": "0.73.1"
+  }
+}

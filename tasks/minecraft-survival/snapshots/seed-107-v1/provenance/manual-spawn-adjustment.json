@@ -1,0 +1,23 @@
+{
+  "type": "manual_spawn_adjustment",
+  "previousManifestRevision": "1",
+  "newManifestRevision": "2",
+  "previousSpawn": {
+    "dimension": "minecraft:overworld",
+    "x": -95.5,
+    "y": 69,
+    "z": 368.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": -107.5,
+    "y": 70,
+    "z": 376.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "reason": "The generated jungle spawn was near a shoreline: 19 of 81 sampled surface columns within 32 blocks were water. The selected point is on contiguous birch-forest grass with air at feet and head; 8 of 81 nearby columns are water. No world blocks were changed.",
+  "worldSha256Unchanged": "70882622cd187ebdd86c3d36f806d701703989b04adf44ffc04947bd81894130"
+}

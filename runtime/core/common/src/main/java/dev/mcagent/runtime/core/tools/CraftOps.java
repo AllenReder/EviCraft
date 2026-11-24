@@ -1,0 +1,498 @@
+package dev.mcagent.runtime.core.tools;
+
+import dev.mcagent.runtime.agent.tool.ToolArgs;
+import dev.mcagent.runtime.core.PlayerInv;
+import dev.mcagent.runtime.entity.BotPlayer;
+import dev.mcagent.runtime.task.TaskResult;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
+/**
+ * The {@code craft} tool: the whole craft flow in one call — pick a recipe whose
+ * materials the inventory can feed, lay the ingredients into a REAL crafting grid
+ * via menu clicks, and shift-take the result. Everything runs through the vanilla
+ * container path ({@code menu.clicked} on a live {@code CraftingMenu} /
+ * {@code InventoryMenu}), so recipe-unlock, stats, ingredient remainders (bucket
+ * back from milk) and container-observing mods all see a normal player crafting —
+ * items never appear out of thin air.
+ *
+ * <p>Grid choice: an already-open grid that fits &gt; the body's own 2x2. A 3x3
+ * recipe requires an already-open vanilla crafting-table Menu; this tool never
+ * scans for or opens a hidden station on the caller's behalf.
+ */
+public final class CraftOps {
+
+    /** Rounds of fill-grid + shift-take; each round crafts up to a full stack per cell. */
+    private static final int MAX_ROUNDS = 16;
+
+    /** A crafting recipe candidate with its (input-independent) output count. */
+    private record Cand(CraftingRecipe recipe, int outCount) {}
+
+    /** One grid cell to fill: row-major position in the target grid + what goes there. */
+    private record Placement(int gridPos, Ingredient ing) {}
+
+    /** The clickable geometry of an open crafting surface. */
+    private record Grid(int w, int h, int[] cells, int result) {}
+
+    private static final String INVENTORY_FULL = "inventory is full — the result doesn't fit";
+
+    /** One typed refusal; failure_type tells the caller which next step can succeed. */
+    private static String failure(String message, String failureType) {
+        return TaskResult.fail(message, Map.of("failure_type", failureType)).toJson();
+    }
+
+    public String craft(String item_id, Integer count, BotPlayer self) {
+        Item target = ToolArgs.parseItem(item_id);
+        int want = count == null ? 1 : Math.clamp(count, 1, 256);
+        ServerLevel level = self.serverLevel();
+        String name = BuiltInRegistries.ITEM.getKey(target).getPath();
+
+        List<Cand> candidates = candidatesFor(level, target);
+        if (candidates.isEmpty()) {
+            return failure("no crafting recipe makes " + name + " — check lookup_recipe: it may "
+                    + "be smelted, stonecut, smithed, mined or traded instead.", "no_recipe");
+        }
+
+        // Reclaim anything stranded in an already-open grid before counting materials.
+        Grid pre = findGrid(self.containerMenu);
+        if (pre != null) {
+            sweepGrid(self.containerMenu, self, pre);
+        }
+
+        // Materials gate: keep recipes the inventory can feed at least once; remember the
+        // closest miss for the refusal message.
+        Map<Item, Integer> pool = poolOf(self.containerMenu, self);
+        List<Cand> satisfiable = new ArrayList<>();
+        List<String> bestMissing = null;
+        for (Cand c : candidates) {
+            List<Ingredient> ings = ingredientsOf(c.recipe());
+            if (feasibleBatch(ings, pool, 1) == 1) {
+                satisfiable.add(c);
+            } else {
+                List<String> missing = missingFor(ings, pool);
+                if (bestMissing == null || missing.size() < bestMissing.size()) {
+                    bestMissing = missing;
+                }
+            }
+        }
+        if (satisfiable.isEmpty()) {
+            return TaskResult.fail("not enough materials for " + name + " — missing: "
+                    + String.join(", ", bestMissing)
+                    + ". Collect or craft those first, then craft again.",
+                    Map.of("failure_type", "missing_ingredients",
+                            "missing", List.copyOf(bestMissing))).toJson();
+        }
+
+        // Pick the crafting surface: the open grid if a satisfiable recipe fits it, else the
+        // body's own 2x2, else a crafting table within reach.
+        AbstractContainerMenu menu = null;
+        Grid grid = null;
+        Cand chosen = null;
+        String station = null;
+
+        Grid cur = findGrid(self.containerMenu);
+        if (cur != null) {
+            for (Cand c : satisfiable) {
+                boolean needsThreeByThree = !fits(c.recipe(), 2, 2);
+                if (fits(c.recipe(), cur.w(), cur.h())
+                        && (!needsThreeByThree || self.containerMenu instanceof CraftingMenu)) {
+                    menu = self.containerMenu;
+                    grid = cur;
+                    chosen = c;
+                    station = (menu == self.inventoryMenu)
+                            ? "Used your own 2x2 grid." : "Used the already-open grid.";
+                    break;
+                }
+            }
+        }
+        if (chosen == null) {
+            for (Cand c : satisfiable) {
+                if (fits(c.recipe(), 2, 2)) {
+                    chosen = c;
+                    break;
+                }
+            }
+            if (chosen != null) {
+                if (self.containerMenu != self.inventoryMenu) {
+                    self.closeContainer();   // a gridless GUI (chest, furnace) was open — put it away
+                }
+                menu = self.inventoryMenu;
+                grid = findGrid(menu);
+                station = "Used your own 2x2 grid.";
+            }
+        }
+        if (chosen == null) {
+            // Every vanilla crafting recipe fits 3x3, so what remains needs a crafting table.
+            return failure(name + " is a 3x3 recipe and needs an open crafting-table Menu.",
+                    "needs_crafting_table");
+        }
+
+        try {
+            return doCraft(menu, grid, chosen, target, want, name, station, self);
+        } finally {
+            sweepGrid(menu, self, grid);
+        }
+    }
+
+    // ---- the fill / take loop ----
+
+    private static String doCraft(AbstractContainerMenu menu, Grid grid, Cand chosen, Item target,
+                                  int want, String name, String station, BotPlayer self) {
+        if (!settleCarried(menu, self)) {
+            return failure("the cursor is holding items and no inventory slot is free to put "
+                    + "them down — free a slot first (drop_items).", "inventory_full");
+        }
+        Map<Item, Integer> before = poolOf(menu, self);
+        List<Ingredient> ings = ingredientsOf(chosen.recipe());
+        int output = Math.max(1, chosen.outCount());
+        int crafted = 0;
+        String stopped = null;
+
+        for (int round = 0; round < MAX_ROUNDS && crafted < want; round++) {
+            int craftsLeft = Math.ceilDiv(want - crafted, output);
+            int batch = feasibleBatch(ings, poolOf(menu, self), Math.min(craftsLeft, 64));
+            if (batch <= 0) {
+                stopped = "ran out of materials";
+                break;
+            }
+            // Lay out this batch: per cell, the matching inventory item with the deepest supply.
+            Map<Item, Integer> sim = new HashMap<>(poolOf(menu, self));
+            boolean laidOut = true;
+            for (Placement pl : placements(chosen.recipe(), grid.w())) {
+                Item pick = pickItem(pl.ing(), sim);
+                int cellIdx = pick == null ? -1 : grid.cells()[pl.gridPos()];
+                if (cellIdx < 0 || placeIntoCell(menu, self, cellIdx, pick, pl.ing(), batch) < batch) {
+                    laidOut = false;
+                    break;
+                }
+                sim.merge(pick, -batch, Integer::sum);
+            }
+            if (!laidOut) {
+                sweepGrid(menu, self, grid);
+                stopped = "couldn't lay out the grid (materials changed mid-craft?)";
+                break;
+            }
+            if (menu.slots.get(grid.result()).getItem().isEmpty()) {
+                sweepGrid(menu, self, grid);
+                stopped = "the laid-out grid doesn't form this recipe (unexpected — mod interference?)";
+                break;
+            }
+            int have0 = PlayerInv.count(self.getInventory(), target);
+            menu.clicked(grid.result(), 0, ClickType.QUICK_MOVE, self);   // vanilla mass-craft + onTake
+            self.swing(InteractionHand.MAIN_HAND);
+            sweepGrid(menu, self, grid);
+            int gained = PlayerInv.count(self.getInventory(), target) - have0;
+            if (gained <= 0) {
+                stopped = INVENTORY_FULL;
+                break;
+            }
+            crafted += gained;
+        }
+
+        if (crafted <= 0) {
+            return failure("crafted nothing — "
+                    + (stopped == null ? "unknown reason" : stopped) + ".",
+                    INVENTORY_FULL.equals(stopped) ? "inventory_full" : "crafted_nothing");
+        }
+
+        // Report material flow as inventory deltas (covers remainders like buckets coming back).
+        Map<Item, Integer> after = poolOf(menu, self);
+        List<String> used = new ArrayList<>();
+        List<String> back = new ArrayList<>();
+        for (Item item : new TreeSet<>(union(before, after))) {
+            int delta = after.getOrDefault(item, 0) - before.getOrDefault(item, 0);
+            String path = BuiltInRegistries.ITEM.getKey(item).getPath();
+            if (delta < 0) {
+                used.add((-delta) + "x " + path);
+            } else if (delta > 0 && item != target) {
+                back.add(delta + "x " + path);
+            }
+        }
+
+        int carrying = PlayerInv.count(self.getInventory(), target);
+        StringBuilder msg = new StringBuilder("crafted " + crafted + "x " + name);
+        if (crafted < want) {
+            msg.append(" (wanted ").append(want).append(" — stopped: ").append(stopped).append(")");
+        }
+        if (!used.isEmpty()) {
+            msg.append(" — used ").append(String.join(", ", used));
+        }
+        if (!back.isEmpty()) {
+            msg.append("; got back ").append(String.join(", ", back));
+        }
+        msg.append(". ").append(station).append(" Now carrying ").append(carrying).append("x ")
+                .append(name).append(".");
+        return TaskResult.ok(msg.toString(), Map.of("crafted", crafted, "carrying", carrying)).toJson();
+    }
+
+    private static TreeSet<Item> union(Map<Item, Integer> a, Map<Item, Integer> b) {
+        TreeSet<Item> keys = new TreeSet<>((x, y) -> BuiltInRegistries.ITEM.getKey(x).compareTo(
+                BuiltInRegistries.ITEM.getKey(y)));
+        keys.addAll(a.keySet());
+        keys.addAll(b.keySet());
+        return keys;
+    }
+
+    // ---- recipe lookup / feasibility ----
+
+    private static List<Cand> candidatesFor(ServerLevel level, Item target) {
+        List<Cand> out = new ArrayList<>();
+        for (RecipeHolder<?> holder : level.getRecipeManager().getRecipes()) {
+            if (!(holder.value() instanceof CraftingRecipe cr)) {
+                continue;
+            }
+            // A special recipe (firework, map-clone, …) has no static ingredient list — skip.
+            if (cr.getIngredients().isEmpty()
+                    || cr.getIngredients().stream().allMatch(Ingredient::isEmpty)) {
+                continue;
+            }
+            ItemStack result;
+            try {
+                result = cr.assemble(CraftingInput.EMPTY, level.registryAccess());   // shaped/shapeless ignore input
+            } catch (RuntimeException inputDependent) {
+                continue;
+            }
+            if (result.isEmpty() || result.getItem() != target) {
+                continue;
+            }
+            out.add(new Cand(cr, result.getCount()));
+        }
+        return out;
+    }
+
+    /** The recipe's non-empty ingredients — the per-craft shopping list. */
+    private static List<Ingredient> ingredientsOf(CraftingRecipe recipe) {
+        return recipe.getIngredients().stream().filter(i -> !i.isEmpty()).toList();
+    }
+
+    private static boolean fits(CraftingRecipe recipe, int w, int h) {
+        if (recipe instanceof ShapedRecipe s) {
+            return s.getWidth() <= w && s.getHeight() <= h;
+        }
+        return ingredientsOf(recipe).size() <= w * h;
+    }
+
+    /** Where each ingredient goes in a grid of width {@code gridW} (shaped anchors top-left). */
+    private static List<Placement> placements(CraftingRecipe recipe, int gridW) {
+        List<Placement> out = new ArrayList<>();
+        if (recipe instanceof ShapedRecipe s) {
+            int w = s.getWidth(), h = s.getHeight();
+            var cells = s.getIngredients();
+            for (int r = 0; r < h; r++) {
+                for (int c = 0; c < w; c++) {
+                    Ingredient ing = cells.get(r * w + c);
+                    if (!ing.isEmpty()) {
+                        out.add(new Placement(r * gridW + c, ing));
+                    }
+                }
+            }
+        } else {
+            int pos = 0;
+            for (Ingredient ing : recipe.getIngredients()) {
+                if (!ing.isEmpty()) {
+                    out.add(new Placement(pos++, ing));
+                }
+            }
+        }
+        return out;
+    }
+
+    /** The matching item with the deepest supply in {@code pool}, or null. */
+    private static Item pickItem(Ingredient ing, Map<Item, Integer> pool) {
+        Item best = null;
+        int bestN = 0;
+        for (ItemStack s : ing.getItems()) {
+            int n = pool.getOrDefault(s.getItem(), 0);
+            if (n > bestN) {
+                best = s.getItem();
+                bestN = n;
+            }
+        }
+        return best;
+    }
+
+    /**
+     * The largest per-cell stack size {@code <= wantBatch} the pool can feed for one grid
+     * layout (each cell drawing greedily, shared items competing). 0 = can't craft once.
+     */
+    private static int feasibleBatch(List<Ingredient> ings, Map<Item, Integer> pool0, int wantBatch) {
+        int n = Math.max(0, wantBatch);
+        while (n > 0) {
+            Map<Item, Integer> pool = new HashMap<>(pool0);
+            int cap = n;
+            boolean ok = true;
+            for (Ingredient ing : ings) {
+                Item pick = pickItem(ing, pool);
+                int have = pick == null ? 0 : pool.getOrDefault(pick, 0);
+                int usable = pick == null ? 0 : Math.min(have, new ItemStack(pick).getMaxStackSize());
+                if (usable < n) {
+                    cap = usable;
+                    ok = false;
+                    break;
+                }
+                pool.merge(pick, -n, Integer::sum);
+            }
+            if (ok) {
+                return n;
+            }
+            n = cap;
+        }
+        return 0;
+    }
+
+    /** "3x iron_ingot (have 1)" lines for every ingredient the pool can't cover once. */
+    private static List<String> missingFor(List<Ingredient> ings, Map<Item, Integer> pool) {
+        Map<String, int[]> tally = new LinkedHashMap<>();       // desc -> [need]
+        Map<String, Ingredient> rep = new LinkedHashMap<>();
+        for (Ingredient ing : ings) {
+            String desc = QueryExtraOps.describeIngredient(ing);
+            tally.computeIfAbsent(desc, k -> new int[1])[0]++;
+            rep.putIfAbsent(desc, ing);
+        }
+        List<String> out = new ArrayList<>();
+        for (Map.Entry<String, int[]> e : tally.entrySet()) {
+            int need = e.getValue()[0];
+            int have = 0;
+            for (ItemStack s : rep.get(e.getKey()).getItems()) {
+                have += pool.getOrDefault(s.getItem(), 0);
+            }
+            if (have < need) {
+                out.add(need + "x " + e.getKey() + " (have " + have + ")");
+            }
+        }
+        return out;
+    }
+
+    // ---- menu plumbing ----
+
+    /** Detect a crafting surface generically: CraftingContainer-backed slots + the ResultSlot. */
+    private static Grid findGrid(AbstractContainerMenu menu) {
+        if (menu == null) {
+            return null;
+        }
+        int w = 0, h = 0, result = -1;
+        int[] cells = null;
+        for (Slot slot : menu.slots) {
+            if (slot instanceof ResultSlot) {
+                result = slot.index;
+                continue;
+            }
+            if (slot.container instanceof CraftingContainer cc) {
+                if (cells == null) {
+                    w = cc.getWidth();
+                    h = cc.getHeight();
+                    cells = new int[w * h];
+                    Arrays.fill(cells, -1);
+                }
+                int pos = slot.getContainerSlot();
+                if (pos >= 0 && pos < cells.length) {
+                    cells[pos] = slot.index;
+                }
+            }
+        }
+        return (cells == null || result < 0) ? null : new Grid(w, h, cells, result);
+    }
+
+    /**
+     * The body's spendable materials as seen through {@code menu}: player-side slots only,
+     * and only main inventory + hotbar (container slots 0–35) — armor and offhand stay on.
+     */
+    private static Map<Item, Integer> poolOf(AbstractContainerMenu menu, BotPlayer self) {
+        Map<Item, Integer> pool = new HashMap<>();
+        if (menu == null) {
+            return pool;
+        }
+        for (Slot slot : menu.slots) {
+            if (slot.container != self.getInventory() || slot.getContainerSlot() >= 36) {
+                continue;
+            }
+            ItemStack s = slot.getItem();
+            if (!s.isEmpty()) {
+                pool.merge(s.getItem(), s.getCount(), Integer::sum);
+            }
+        }
+        return pool;
+    }
+
+    /** Put {@code n} of {@code item} into one grid cell via clicks; returns how many landed. */
+    private static int placeIntoCell(AbstractContainerMenu menu, BotPlayer self, int cellIdx,
+                                     Item item, Ingredient ing, int n) {
+        int placed = 0;
+        int guard = 0;
+        while (placed < n && guard++ < 40) {
+            int src = -1;
+            for (Slot slot : menu.slots) {
+                if (slot.container != self.getInventory() || slot.getContainerSlot() >= 36) {
+                    continue;
+                }
+                ItemStack s = slot.getItem();
+                if (!s.isEmpty() && s.is(item) && ing.test(s)) {
+                    src = slot.index;
+                    break;
+                }
+            }
+            if (src < 0) {
+                break;
+            }
+            int before = placed;
+            MenuOps.dripInto(menu, self, src, cellIdx, n - placed);
+            placed = menu.slots.get(cellIdx).getItem().getCount();
+            if (placed <= before) {
+                break;   // nothing placed this round (empty grab or rejected); stop instead of spinning
+            }
+        }
+        return placed;
+    }
+
+    /** Shift every non-empty grid cell back into the inventory. */
+    private static void sweepGrid(AbstractContainerMenu menu, BotPlayer self, Grid grid) {
+        if (menu == null || grid == null) {
+            return;
+        }
+        for (int idx : grid.cells()) {
+            if (idx >= 0 && idx < menu.slots.size() && !menu.slots.get(idx).getItem().isEmpty()) {
+                menu.clicked(idx, 0, ClickType.QUICK_MOVE, self);
+            }
+        }
+    }
+
+    /** Park a carried stack into a free main-inventory slot; false if none accepts it. */
+    private static boolean settleCarried(AbstractContainerMenu menu, BotPlayer self) {
+        if (menu.getCarried().isEmpty()) {
+            return true;
+        }
+        for (Slot slot : menu.slots) {
+            if (slot.container != self.getInventory() || slot.getContainerSlot() >= 36) {
+                continue;
+            }
+            if (slot.getItem().isEmpty()) {
+                menu.clicked(slot.index, 0, ClickType.PICKUP, self);
+                return menu.getCarried().isEmpty();
+            }
+        }
+        return false;
+    }
+
+}

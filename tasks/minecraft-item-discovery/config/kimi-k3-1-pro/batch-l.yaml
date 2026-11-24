@@ -1,0 +1,43 @@
+# L instances from batch.yaml.
+concurrency: 20
+instances:
+  - id: discovery-kimi-k3-1-pro-s100-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s100-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s101-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s101-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s102-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s102-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s103-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s103-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s104-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s104-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s105-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s105-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s106-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s106-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s107-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s107-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s108-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s108-l.json
+    repetitions: 1
+  - id: discovery-kimi-k3-1-pro-s109-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s109-l.json
+    repetitions: 1

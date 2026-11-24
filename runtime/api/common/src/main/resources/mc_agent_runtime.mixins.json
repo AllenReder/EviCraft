@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.mcagent.runtime.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerChunkSenderRuntimeBotMixin",
+    "PlayerListRuntimeBotRespawnMixin",
+    "ServerPacketVirtualClientChunkTrackerMixin",
+    "MinecraftServerSimulationSuspensionMixin",
+    "ServerLevelLoadedBlockKnowledgeMixin",
+    "PortalActivationObservationMixin",
+    "ChunkMapRuntimeMaintenanceAccess",
+    "SynchedEntityDataAccess"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

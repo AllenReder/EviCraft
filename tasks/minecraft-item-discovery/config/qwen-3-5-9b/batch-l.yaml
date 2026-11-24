@@ -1,0 +1,43 @@
+# L instances from batch.yaml.
+concurrency: 50
+instances:
+  - id: discovery-qwen-3-5-9b-s100-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s100-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s101-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s101-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s102-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s102-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s103-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s103-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s104-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s104-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s105-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s105-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s106-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s106-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s107-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s107-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s108-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s108-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-5-9b-s109-l
+    taskPath: ../..
+    configPath: qwen-3.5-9b-s109-l.json
+    repetitions: 5

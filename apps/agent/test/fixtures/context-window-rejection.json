@@ -1,0 +1,8 @@
+{
+  "source": "Observed in a long-horizon Survival run; the raw trace is not included in this release.",
+  "httpStatus": 400,
+  "message": "Your input exceeds the context window of this model. Please adjust your input and try again.",
+  "observedEndReason": "model_transport_error",
+  "observedCompactions": 0,
+  "note": "Status and message are archived facts. Tests reconstruct the provider JSON envelope; the original error code/envelope was not preserved."
+}

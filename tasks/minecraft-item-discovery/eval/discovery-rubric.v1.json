@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1",
+  "revision": "discovery-1.21.1-v1",
+  "metric": "observed_unique_item_ids",
+  "tickBudget": 144000,
+  "sources": [
+    "inventory.slots[0..35]",
+    "inventory.mainhand",
+    "inventory.offhand",
+    "inventory.armor"
+  ]
+}

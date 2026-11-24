@@ -1,0 +1,11 @@
+# Quickstart: the scripted Harness (no model) on seed 100, G and L once each, 2,400 ticks, no camera.
+concurrency: 2
+instances:
+  - id: quickstart-scripted-s100-g
+    taskPath: ../..
+    configPath: scripted-s100-g.json
+    repetitions: 1
+  - id: quickstart-scripted-s100-l
+    taskPath: ../..
+    configPath: scripted-s100-l.json
+    repetitions: 1

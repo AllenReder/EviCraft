@@ -1,0 +1,181 @@
+{
+  "actorDeathCount": 0,
+  "portalActivationCount": 0,
+  "actor": {
+    "present": true,
+    "uuid": "7b2726d9-3946-470e-8b20-b69310004dab",
+    "name": "bot",
+    "lifecycle": "alive",
+    "dimension": "minecraft:overworld",
+    "position": {
+      "x": -127.5,
+      "y": 73,
+      "z": -63.5
+    },
+    "yaw": 0,
+    "pitch": 0,
+    "health": 20,
+    "food": 20
+  },
+  "inventory": {
+    "selectedHotbarSlot": 0,
+    "slots": [
+      {
+        "slot": 0,
+        "item": null
+      },
+      {
+        "slot": 1,
+        "item": null
+      },
+      {
+        "slot": 2,
+        "item": null
+      },
+      {
+        "slot": 3,
+        "item": null
+      },
+      {
+        "slot": 4,
+        "item": null
+      },
+      {
+        "slot": 5,
+        "item": null
+      },
+      {
+        "slot": 6,
+        "item": null
+      },
+      {
+        "slot": 7,
+        "item": null
+      },
+      {
+        "slot": 8,
+        "item": null
+      },
+      {
+        "slot": 9,
+        "item": null
+      },
+      {
+        "slot": 10,
+        "item": null
+      },
+      {
+        "slot": 11,
+        "item": null
+      },
+      {
+        "slot": 12,
+        "item": null
+      },
+      {
+        "slot": 13,
+        "item": null
+      },
+      {
+        "slot": 14,
+        "item": null
+      },
+      {
+        "slot": 15,
+        "item": null
+      },
+      {
+        "slot": 16,
+        "item": null
+      },
+      {
+        "slot": 17,
+        "item": null
+      },
+      {
+        "slot": 18,
+        "item": null
+      },
+      {
+        "slot": 19,
+        "item": null
+      },
+      {
+        "slot": 20,
+        "item": null
+      },
+      {
+        "slot": 21,
+        "item": null
+      },
+      {
+        "slot": 22,
+        "item": null
+      },
+      {
+        "slot": 23,
+        "item": null
+      },
+      {
+        "slot": 24,
+        "item": null
+      },
+      {
+        "slot": 25,
+        "item": null
+      },
+      {
+        "slot": 26,
+        "item": null
+      },
+      {
+        "slot": 27,
+        "item": null
+      },
+      {
+        "slot": 28,
+        "item": null
+      },
+      {
+        "slot": 29,
+        "item": null
+      },
+      {
+        "slot": 30,
+        "item": null
+      },
+      {
+        "slot": 31,
+        "item": null
+      },
+      {
+        "slot": 32,
+        "item": null
+      },
+      {
+        "slot": 33,
+        "item": null
+      },
+      {
+        "slot": 34,
+        "item": null
+      },
+      {
+        "slot": 35,
+        "item": null
+      }
+    ],
+    "mainhand": null,
+    "offhand": null,
+    "armor": {
+      "head": null,
+      "chest": null,
+      "legs": null,
+      "feet": null
+    }
+  },
+  "blocks": [],
+  "fenceSequence": 5,
+  "serverTick": 0,
+  "gameTime": 0
+}

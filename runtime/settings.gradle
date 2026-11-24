@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+// This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
+rootProject.name = 'evicraft'
+// core/ (the Runtime mod) consumes api/ (the engine) as a project dependency in one build.
+include('core:common')
+include('core:neoforge')
+include('api:common')
+include('api:neoforge')
+// Pure tool descriptors.
+include('tool-contracts')
+
+// Client-only camera that renders the Runtime Bot's first-person view for screenshots.
+include('camera:neoforge')

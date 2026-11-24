@@ -1,0 +1,16 @@
+plugins {
+    // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
+    id 'net.neoforged.moddev' version '2.0.141' apply false
+}
+
+// The api projects form their own mod (mc_agent_api) with their own version line.
+allprojects { ext.mod_id = 'mc_agent' }
+['api:common', 'api:neoforge'].each { path ->
+    project(path) {
+        version = '0.0.8-SNAPSHOT'
+        ext.mod_id = 'mc_agent_api'
+        // A group distinct from core's keeps Gradle from resolving the same-named
+        // :api:common and :core:common projects as one module.
+        group = 'dev.mcagent.runtime.api'
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "manual_spawn_adjustment",
+  "previousManifestRevision": "1",
+  "newManifestRevision": "2",
+  "previousSpawn": {
+    "dimension": "minecraft:overworld",
+    "x": 0.5,
+    "y": 73,
+    "z": 0.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": 0.5,
+    "y": 66,
+    "z": 0.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "reason": "The generated spawn was inside an oak-leaf canopy. A real NeoForge probe found grass_block at y=65 and air at y=66 and y=67, so y=66 is the ground-level feet position.",
+  "worldSha256Unchanged": "a2a9820f9ff06c503f88cce07df2b62a162f8a2204dba749152e5fd561db1913"
+}

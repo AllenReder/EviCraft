@@ -1,0 +1,22 @@
+modLoader = "javafml"
+loaderVersion = "${neoforge_loader_version_range}"
+license = "MIT"
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "EviCraft Camera"
+description = '''Client-only camera that renders the Runtime Bot's first-person view for screenshots.'''
+[[mixins]]
+config = "${mod_id}.mixins.json"
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "CLIENT"
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "CLIENT"

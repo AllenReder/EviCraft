@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "staircase-descent-and-return",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "bottom_marker": {
+      "blockId": "minecraft:emerald_block",
+      "position": { "x": 5, "y": 97, "z": 0 },
+      "initiallyVisible": false
+    },
+    "bottom_marker_support": {
+      "blockId": "minecraft:stone",
+      "position": { "x": 5, "y": 96, "z": 0 },
+      "initiallyVisible": false
+    }
+  },
+  "structureFixture": {
+    "id": "four-step-east-staircase",
+    "version": 1,
+    "origin": { "x": 0, "y": 96, "z": -1 }
+  }
+}

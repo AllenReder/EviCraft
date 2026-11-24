@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "furnace-processing",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "storage": {
+      "blockId": "minecraft:chest",
+      "position": { "x": 3, "y": 102, "z": 2 },
+      "contents": [
+        { "slot": 0, "itemId": "minecraft:raw_iron", "count": 2 },
+        { "slot": 1, "itemId": "minecraft:coal", "count": 2 }
+      ],
+      "initiallyVisible": false
+    },
+    "furnace": {
+      "blockId": "minecraft:furnace",
+      "position": { "x": 3, "y": 101, "z": -2 },
+      "contents": [
+        { "slot": 1, "itemId": "minecraft:oak_planks", "count": 1 }
+      ],
+      "initiallyVisible": false
+    }
+  }
+}

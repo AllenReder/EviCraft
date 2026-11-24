@@ -1,0 +1,83 @@
+# Survival, Kimi K3.1 Pro: seeds 100–109, G/L interleaved, 2 repetitions per config, 40 Attempts, shared concurrency 20, 72,000 ticks.
+concurrency: 20
+instances:
+  - id: survival-kimi-k3-1-pro-s100-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s100-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s100-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s100-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s101-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s101-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s101-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s101-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s102-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s102-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s102-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s102-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s103-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s103-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s103-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s103-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s104-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s104-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s104-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s104-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s105-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s105-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s105-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s105-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s106-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s106-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s106-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s106-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s107-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s107-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s107-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s107-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s108-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s108-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s108-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s108-l.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s109-g
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s109-g.json
+    repetitions: 2
+  - id: survival-kimi-k3-1-pro-s109-l
+    taskPath: ../..
+    configPath: kimi-k3.1-pro-s109-l.json
+    repetitions: 2

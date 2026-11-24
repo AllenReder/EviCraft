@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "structure": "structure.snbt",
+  "size": { "x": 13, "y": 5, "z": 25 },
+  "hiddenMarkers": { "cave_marker": { "x": 11, "y": 2, "z": 10 } }
+}

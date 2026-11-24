@@ -1,0 +1,23 @@
+{
+  "type": "manual_spawn_adjustment",
+  "previousManifestRevision": "1",
+  "newManifestRevision": "2",
+  "previousSpawn": {
+    "dimension": "minecraft:overworld",
+    "x": -335.5,
+    "y": 64,
+    "z": -95.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": -343.5,
+    "y": 64,
+    "z": -119.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "reason": "The generated spawn was on a narrow forest coast: 32 of 81 sampled surface columns within 32 blocks were water. The selected point is on contiguous inland forest grass with air at feet and head; 8 of 81 nearby columns are water. No world blocks were changed.",
+  "worldSha256Unchanged": "7eff45105189c6027aa09a800dc4219521275511172f8f39873746d091309d26"
+}

@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "1",
+  "revision": "survival-1.21.1-v1",
+  "metric": "highest_confirmed_survival_node",
+  "tickBudget": 72000,
+  "nodes": [
+    {
+      "id": "log_or_stem",
+      "points": 10,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:oak_log",
+          "minecraft:spruce_log",
+          "minecraft:birch_log",
+          "minecraft:jungle_log",
+          "minecraft:acacia_log",
+          "minecraft:dark_oak_log",
+          "minecraft:mangrove_log",
+          "minecraft:cherry_log",
+          "minecraft:crimson_stem",
+          "minecraft:warped_stem",
+          "minecraft:stripped_oak_log",
+          "minecraft:stripped_spruce_log",
+          "minecraft:stripped_birch_log",
+          "minecraft:stripped_jungle_log",
+          "minecraft:stripped_acacia_log",
+          "minecraft:stripped_dark_oak_log",
+          "minecraft:stripped_mangrove_log",
+          "minecraft:stripped_cherry_log",
+          "minecraft:stripped_crimson_stem",
+          "minecraft:stripped_warped_stem"
+        ]
+      }
+    },
+    {
+      "id": "planks",
+      "points": 20,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:oak_planks",
+          "minecraft:spruce_planks",
+          "minecraft:birch_planks",
+          "minecraft:jungle_planks",
+          "minecraft:acacia_planks",
+          "minecraft:dark_oak_planks",
+          "minecraft:mangrove_planks",
+          "minecraft:cherry_planks",
+          "minecraft:crimson_planks",
+          "minecraft:warped_planks",
+          "minecraft:bamboo_planks"
+        ]
+      }
+    },
+    {
+      "id": "crafting_table",
+      "points": 30,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:crafting_table"
+        ]
+      }
+    },
+    {
+      "id": "wooden_pickaxe",
+      "points": 40,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:wooden_pickaxe"
+        ]
+      }
+    },
+    {
+      "id": "cobblestone",
+      "points": 50,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:cobblestone"
+        ]
+      }
+    },
+    {
+      "id": "furnace",
+      "points": 60,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:furnace"
+        ]
+      }
+    },
+    {
+      "id": "stone_pickaxe",
+      "points": 70,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:stone_pickaxe"
+        ]
+      }
+    },
+    {
+      "id": "raw_iron",
+      "points": 90,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:raw_iron"
+        ]
+      }
+    },
+    {
+      "id": "iron_ingot",
+      "points": 100,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:iron_ingot"
+        ]
+      }
+    },
+    {
+      "id": "iron_pickaxe",
+      "points": 130,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:iron_pickaxe"
+        ]
+      }
+    },
+    {
+      "id": "diamond",
+      "points": 150,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:diamond"
+        ]
+      }
+    },
+    {
+      "id": "diamond_pickaxe",
+      "points": 170,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:diamond_pickaxe"
+        ]
+      }
+    },
+    {
+      "id": "obsidian",
+      "points": 180,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:obsidian"
+        ]
+      }
+    },
+    {
+      "id": "nether_frame",
+      "points": 190,
+      "predicate": {
+        "kind": "portal_frame",
+        "portal": "nether"
+      }
+    },
+    {
+      "id": "nether_portal_active",
+      "points": 200,
+      "predicate": {
+        "kind": "portal_active",
+        "portal": "nether"
+      }
+    },
+    {
+      "id": "enter_nether",
+      "points": 210,
+      "predicate": {
+        "kind": "dimension",
+        "dimension": "minecraft:the_nether"
+      }
+    },
+    {
+      "id": "enter_fortress",
+      "points": 230,
+      "predicate": {
+        "kind": "inside_structure",
+        "structureId": "minecraft:fortress"
+      }
+    },
+    {
+      "id": "blaze_rod",
+      "points": 250,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:blaze_rod"
+        ]
+      }
+    },
+    {
+      "id": "blaze_powder",
+      "points": 260,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:blaze_powder"
+        ]
+      }
+    },
+    {
+      "id": "eye_of_ender",
+      "points": 280,
+      "predicate": {
+        "kind": "held_item",
+        "itemIds": [
+          "minecraft:ender_eye"
+        ]
+      }
+    },
+    {
+      "id": "end_frame_vicinity",
+      "points": 290,
+      "predicate": {
+        "kind": "end_portal_approach",
+        "portal": "end"
+      }
+    },
+    {
+      "id": "end_portal_active",
+      "points": 300,
+      "predicate": {
+        "kind": "portal_active",
+        "portal": "end"
+      }
+    }
+  ]
+}

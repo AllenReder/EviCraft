@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "interaction-and-collection",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "storage": {
+      "blockId": "minecraft:chest",
+      "position": { "x": 4, "y": 104, "z": 4 },
+      "contents": [
+        { "slot": 0, "itemId": "minecraft:diamond_pickaxe", "count": 1 }
+      ],
+      "initiallyVisible": false
+    },
+    "collection_target_one": {
+      "blockId": "minecraft:diamond_ore",
+      "position": { "x": -2, "y": 101, "z": -2 }
+    },
+    "collection_target_two": {
+      "blockId": "minecraft:diamond_ore",
+      "position": { "x": -3, "y": 101, "z": -2 }
+    }
+  }
+}

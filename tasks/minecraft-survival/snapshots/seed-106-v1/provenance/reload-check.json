@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "seed": "106",
+  "worldRevision": "1",
+  "worldSha256": "addbdff254a2420a06b284a10dd2e3f2d05154b20085f28bb299298633a5d04c",
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": 0.5,
+    "y": 63,
+    "z": 0.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "biomeId": "minecraft:forest",
+  "blocks": [
+    {
+      "dimension": "minecraft:overworld",
+      "x": 0,
+      "y": 62,
+      "z": 0,
+      "blockState": "minecraft:grass_block[snowy=false]"
+    },
+    {
+      "dimension": "minecraft:overworld",
+      "x": 0,
+      "y": 63,
+      "z": 0,
+      "blockState": "minecraft:short_grass"
+    },
+    {
+      "dimension": "minecraft:overworld",
+      "x": 0,
+      "y": 64,
+      "z": 0,
+      "blockState": "minecraft:air"
+    }
+  ],
+  "serverTick": 0,
+  "gameTime": 0,
+  "actor": {
+    "present": true,
+    "uuid": "b911e3be-bd27-43f8-b32b-ad063915f8e9",
+    "name": "bot",
+    "lifecycle": "alive",
+    "dimension": "minecraft:overworld",
+    "position": {
+      "x": 0.5,
+      "y": 63,
+      "z": 0.5
+    },
+    "yaw": 0,
+    "pitch": 0,
+    "health": 20,
+    "food": 20
+  }
+}

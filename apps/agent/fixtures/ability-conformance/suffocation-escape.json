@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "id": "suffocation-escape",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {}
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "explore-and-return-surface",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "structureFixture": {
+    "id": "captured-spruce-forest",
+    "version": 1,
+    "origin": { "x": -6, "y": 94, "z": -12 }
+  },
+  "fixtures": {
+    "hidden_marker": {
+      "blockId": "minecraft:emerald_block",
+      "position": { "x": -6, "y": 101, "z": 4 },
+      "initiallyVisible": false
+    },
+    "marker_support": {
+      "blockId": "minecraft:podzol",
+      "position": { "x": -6, "y": 100, "z": 4 },
+      "initiallyVisible": false
+    },
+    "forest_trunk_one_lower": {
+      "blockId": "minecraft:spruce_log",
+      "position": { "x": 1, "y": 101, "z": 2 },
+      "initiallyVisible": false
+    },
+    "forest_trunk_one_upper": {
+      "blockId": "minecraft:spruce_log",
+      "position": { "x": 1, "y": 102, "z": 2 },
+      "initiallyVisible": false
+    },
+    "forest_trunk_one_support": {
+      "blockId": "minecraft:podzol",
+      "position": { "x": 1, "y": 100, "z": 2 },
+      "initiallyVisible": false
+    },
+    "forest_trunk_two_lower": {
+      "blockId": "minecraft:spruce_log",
+      "position": { "x": -3, "y": 101, "z": -3 },
+      "initiallyVisible": false
+    },
+    "forest_trunk_two_upper": {
+      "blockId": "minecraft:spruce_log",
+      "position": { "x": -3, "y": 103, "z": -3 },
+      "initiallyVisible": false
+    },
+    "forest_trunk_two_support": {
+      "blockId": "minecraft:coarse_dirt",
+      "position": { "x": -3, "y": 100, "z": -3 },
+      "initiallyVisible": false
+    }
+  }
+}

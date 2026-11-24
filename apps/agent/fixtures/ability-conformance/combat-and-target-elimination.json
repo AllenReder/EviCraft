@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "combat-and-target-elimination",
+  "difficulty": "normal",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "combat": {
+    "zombiePosition": { "x": 2, "y": 101, "z": 0 }
+  },
+  "fixtures": {}
+}

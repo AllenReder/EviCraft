@@ -1,0 +1,43 @@
+# L instances from batch.yaml.
+concurrency: 50
+instances:
+  - id: survival-glm-5-3-flash-s100-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s100-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s101-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s101-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s102-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s102-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s103-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s103-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s104-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s104-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s105-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s105-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s106-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s106-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s107-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s107-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s108-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s108-l.json
+    repetitions: 5
+  - id: survival-glm-5-3-flash-s109-l
+    taskPath: ../..
+    configPath: glm-5.3-flash-s109-l.json
+    repetitions: 5

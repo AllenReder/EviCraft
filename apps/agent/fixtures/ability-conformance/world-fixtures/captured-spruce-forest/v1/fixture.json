@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "structure": "structure.snbt",
+  "size": { "x": 24, "y": 32, "z": 24 },
+  "hiddenMarkers": {
+    "surface_marker": { "x": 0, "y": 7, "z": 16 }
+  }
+}

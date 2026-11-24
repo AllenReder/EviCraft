@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "placement-approach-and-retry",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "placement_support": {
+      "blockId": "minecraft:polished_andesite",
+      "position": { "x": 8, "y": 100, "z": 0 },
+      "initiallyVisible": false
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "limited-scaffold-bridge",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 100, "z": 0 },
+  "fixtures": {
+    "goal_support": {
+      "blockId": "minecraft:gold_block",
+      "position": { "x": 13, "y": 99, "z": 0 },
+      "initiallyVisible": false
+    }
+  },
+  "structureFixture": {
+    "id": "three-gap-ceiling-corridor",
+    "version": 3,
+    "origin": { "x": -2, "y": 85, "z": -1 }
+  }
+}

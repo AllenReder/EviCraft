@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "structure": "structure.snbt",
+  "size": { "x": 3, "y": 3, "z": 3 },
+  "hiddenMarkers": {
+    "sealed_probe": { "x": 1, "y": 1, "z": 1 }
+  }
+}

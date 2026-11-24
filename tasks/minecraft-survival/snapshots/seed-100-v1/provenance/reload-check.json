@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "seed": "100",
+  "worldRevision": "1",
+  "worldSha256": "19ebbccabee70311736ac38c820702d2343e35d70012961f2bc87ea658375580",
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": 0.5,
+    "y": 95,
+    "z": 0.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "biomeId": "minecraft:savanna",
+  "blocks": [
+    {
+      "dimension": "minecraft:overworld",
+      "x": 0,
+      "y": 94,
+      "z": 0,
+      "blockState": "minecraft:grass_block[snowy=false]"
+    },
+    {
+      "dimension": "minecraft:overworld",
+      "x": 0,
+      "y": 95,
+      "z": 0,
+      "blockState": "minecraft:air"
+    },
+    {
+      "dimension": "minecraft:overworld",
+      "x": 0,
+      "y": 96,
+      "z": 0,
+      "blockState": "minecraft:air"
+    }
+  ],
+  "serverTick": 0,
+  "gameTime": 0,
+  "actor": {
+    "present": true,
+    "uuid": "0fb54ac5-c39c-4059-8f5c-768a3a463e5e",
+    "name": "bot",
+    "lifecycle": "alive",
+    "dimension": "minecraft:overworld",
+    "position": {
+      "x": 0.5,
+      "y": 95,
+      "z": 0.5
+    },
+    "yaw": 0,
+    "pitch": 0,
+    "health": 20,
+    "food": 20
+  }
+}

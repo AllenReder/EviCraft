@@ -1,0 +1,28 @@
+{
+  "name": "@evicraft/harness",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@ai-sdk/deepseek": "^3.0.31",
+    "@ai-sdk/openai": "^4.0.46",
+    "@ai-sdk/openai-compatible": "^3.0.35",
+    "@inquirer/prompts": "^8.5.2",
+    "@evicraft/runtime-sdk": "file:../../runtime/sdk/typescript",
+    "ai": "^7.0.77",
+    "cli-highlight": "^2.1.11",
+    "picocolors": "^1.1.1",
+    "ws": "^8.18.3",
+    "@evicraft/server-host": "file:../../packages/server-host",
+    "undici": "7.29.0"
+  }
+}

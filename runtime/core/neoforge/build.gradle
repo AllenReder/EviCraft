@@ -1,0 +1,155 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev'
+}
+
+dependencies {
+    // The api module engine, now a sibling moddev project in this build.
+    // NeoForge is Mojang-mapped natively, so no remap step is needed.
+    implementation project(':api:neoforge')
+    // Bundle it into core's jar (Jar-in-Jar) so players install one file and get both mods.
+    jarJar(project(':api:neoforge'))
+    implementation 'io.netty:netty-codec-http:4.1.97.Final'
+    jarJar('io.netty:netty-codec-http:[4.1.97.Final]')
+}
+
+sourceSets {
+    smokeFixture {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+configurations {
+    smokeFixtureImplementation.extendsFrom implementation
+    smokeFixtureRuntimeOnly.extendsFrom runtimeOnly
+}
+
+neoForge {
+    version = neoforge_version
+    // Automatically enable neoforge AccessTransformers if the file exists
+    def at = project(':core:common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+        mc_agent_test_fixture {
+            sourceSet sourceSets.smokeFixture
+        }
+    }
+    runs {
+        configureEach {
+            additionalRuntimeClasspathConfiguration.dependencies.add(
+                    project.dependencies.create('io.netty:netty-codec-http:4.1.97.Final'))
+            systemProperty('neoforge.enabledGameTestNamespaces',
+                    System.getProperty('mcagent.gametest.namespace', mod_id))
+            // Every run configuration points at the repository's SNBT template directory, for headless runs
+            // and for `/test run <test>` in a development client alike.
+            systemProperty('mc_agent.gametest.structures', file('gameteststructures').absolutePath)
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})" // Unify the run config names with fabric
+        }
+        client {
+            client()
+            gameDirectory = this.mkdir(this.file("runs/client"))
+        }
+        data {
+            data() // NeoForge 21.1 (1.21.1) has no clientData() run type — the combined data() run + --all covers it
+            gameDirectory = this.mkdir(this.file("runs/data"))
+            // DataGen can be run by - "./gradlew :neoforge:runData" in Terminal.
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+        server {
+            server()
+            this.file("runs/server").createParentDirectories()
+            gameDirectory = file(providers.gradleProperty('runtimeServerGameDir')
+                    .orElse(file('runs/server').absolutePath).get())
+            programArguments.addAll '--port', System.getProperty('mcagent.minecraft.port', '25565'), '--nogui'
+        }
+        gameTestServer {
+            type = "gameTestServer"
+            gameDirectory = file(providers.gradleProperty('gameTestGameDir')
+                    .orElse(file('runs/gametestserver').absolutePath).get())
+            programArguments.addAll '--port', providers.gradleProperty('gameTestMinecraftPort')
+                    .orElse('0').get()
+        }
+        abilityConformanceTemplateServer {
+            server()
+            loadedMods.set([mods.mc_agent, mods.mc_agent_test_fixture])
+            gameDirectory = file(providers.gradleProperty('abilityConformanceGameDir')
+                    .orElse(layout.buildDirectory.dir('ability-conformance/prepare')
+                    .map { it.asFile.absolutePath }).get())
+            programArguments.addAll '--port', providers.gradleProperty('abilityConformanceMinecraftPort')
+                    .orElse('0').get(), '--nogui'
+            systemProperty 'mcagent.smoke.specification',
+                    providers.gradleProperty('abilityConformanceSpecification').orElse('missing').get()
+        }
+        abilityConformanceServer {
+            server()
+            loadedMods.set([mods.mc_agent])
+            gameDirectory = file(providers.gradleProperty('abilityConformanceGameDir')
+                    .orElse(layout.buildDirectory.dir('ability-conformance/run')
+                    .map { it.asFile.absolutePath }).get())
+            programArguments.addAll '--port', providers.gradleProperty('abilityConformanceMinecraftPort')
+                    .orElse('0').get(), '--nogui'
+        }
+    }
+}
+
+neoForge.addModdingDependenciesTo(sourceSets.smokeFixture)
+
+tasks.named('runAbilityConformanceServer').configure {
+    standardInput = System.in
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
+    configurations.named("$variant") {
+        attributes {
+            attribute(loaderAttribute, 'neoforge')
+        }
+    }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName, it.getTaskName(null, 'jarJar')].each { variant ->
+        configurations.named("$variant") {
+            attributes {
+                attribute(loaderAttribute, 'neoforge')
+            }
+        }
+    }
+}
+
+// Reuse ModDevGradle's complete standalone launch contract without running the game.
+tasks.register('exportServerLaunch') {
+    dependsOn tasks.named('createServerLaunchScript')
+    def destination = providers.gradleProperty('serverLaunchOutput')
+            .orElse(layout.buildDirectory.file('moddev/serverLaunch.json')
+            .map { it.asFile.absolutePath })
+    outputs.file(destination)
+    // Preparation must refresh the descriptor even when the launch files are up-to-date.
+    outputs.upToDateWhen { false }
+    doLast {
+        def launch = tasks.named('createServerLaunchScript').get()
+        def run = tasks.named('runServer').get()
+        def descriptor = [
+                javaExecutable: launch.javaExecutable.get(),
+                classpathArgsFile: launch.classpathArgsFile.get().asFile.absolutePath,
+                vmArgsFile: launch.vmArgsFile.get(),
+                programArgsFile: launch.programArgsFile.get(),
+                // Export JavaExec defaults, user settings and argument providers together.
+                jvmArguments: run.allJvmArgs,
+                mainClass: run.mainClass.get(),
+                environment: launch.environment.get(),
+        ]
+        def output = file(destination.get())
+        output.parentFile.mkdirs()
+        output.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(descriptor)) + '\n'
+    }
+}

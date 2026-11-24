@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "explore-and-return-branching-cave",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "structureFixture": {
+    "id": "explore-branching-cave",
+    "version": 1,
+    "origin": { "x": -6, "y": 100, "z": -6 }
+  },
+  "fixtures": {
+    "hidden_marker": { "blockId": "minecraft:emerald_block", "position": { "x": 5, "y": 102, "z": 4 }, "initiallyVisible": false },
+    "marker_support": { "blockId": "minecraft:stone", "position": { "x": 5, "y": 101, "z": 4 }, "initiallyVisible": false },
+    "dead_end_wall": { "blockId": "minecraft:stone", "position": { "x": 0, "y": 101, "z": -4 }, "initiallyVisible": false },
+    "branch_rise": { "blockId": "minecraft:stone", "position": { "x": 3, "y": 102, "z": -2 }, "initiallyVisible": false }
+  }
+}

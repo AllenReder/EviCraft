@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "stale-target-recovery",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "stale_target": {
+      "blockId": "minecraft:diamond_ore",
+      "position": { "x": 2, "y": 101, "z": 0 }
+    },
+    "remaining_target": {
+      "blockId": "minecraft:diamond_ore",
+      "position": { "x": 4, "y": 101, "z": 0 }
+    }
+  }
+}

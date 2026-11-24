@@ -1,0 +1,11 @@
+{
+  "serverTemplatePath": "../../../../build/survival-server",
+  "serverCommand": ["node", "launch.mjs"],
+  "snapshotPath": "../../snapshots/seed-100-v1",
+  "profile": "loaded_world_state",
+  "tickBudget": 2400,
+  "harness": {
+    "command": ["node", "../../../../examples/scripted-harness/harness.mjs"],
+    "config": { "thinkMs": 200, "waitTicks": 40 }
+  }
+}

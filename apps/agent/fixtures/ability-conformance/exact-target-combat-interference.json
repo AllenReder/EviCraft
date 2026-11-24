@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "exact-target-combat-interference",
+  "difficulty": "normal",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {},
+  "combat": {
+    "zombiePosition": { "x": 2, "y": 101, "z": 0 },
+    "distractorZombiePosition": { "x": 2, "y": 101, "z": 2 }
+  }
+}

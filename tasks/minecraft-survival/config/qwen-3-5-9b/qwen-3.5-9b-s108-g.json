@@ -1,0 +1,48 @@
+{
+  "serverTemplatePath": "../../../../build/survival-server",
+  "serverCommand": [
+    "node",
+    "launch.mjs"
+  ],
+  "snapshotPath": "../../snapshots/seed-108-v1",
+  "profile": "grounded_evidence",
+  "tickBudget": 72000,
+  "deathPolicy": "respawn",
+  "groundedBlockExpiryTicks": 400,
+  "groundedEntityExpiryTicks": 400,
+  "camera": {
+    "clientTemplatePath": "../../../../build/camera-client",
+    "viewDistance": 4,
+    "width": 854,
+    "height": 480
+  },
+  "harness": {
+    "command": [
+      "node",
+      "../../../../apps/agent/dist/cli.js"
+    ],
+    "config": {
+      "model": {
+        "provider": "openai-compatible",
+        "name": "sglang",
+        "model": "Qwen/Qwen3.5-9B",
+        "baseUrl": "http://127.0.0.1:30000/v1",
+        "protocol": "chat-completions",
+        "limits": {
+          "contextWindowTokens": 262144,
+          "maxOutputTokens": 65536,
+          "requestTimeoutMs": 7200000,
+          "firstOutputTimeoutMs": 600000,
+          "outputIdleTimeoutMs": 7200000
+        }
+      },
+      "mode": "code",
+      "abilitySet": "shared",
+      "hazardDecisions": "enabled",
+      "skillsPath": "../../../../apps/agent/project-skills",
+      "vision": {
+        "retainedImages": 3
+      }
+    }
+  }
+}

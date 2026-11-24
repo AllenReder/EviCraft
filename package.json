@@ -1,0 +1,30 @@
+{
+  "name": "evicraft",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "workspaces": [
+    "apps/agent",
+    "packages/benchmark",
+    "runtime/sdk/typescript",
+    "packages/server-host",
+    "apps/cli"
+  ],
+  "scripts": {
+    "build": "npm --workspace @evicraft/runtime-sdk run build && tsc -b packages/server-host apps/agent packages/benchmark apps/cli tasks",
+    "typecheck": "npm --workspace @evicraft/runtime-sdk run typecheck && tsc -b packages/server-host apps/agent packages/benchmark apps/cli tasks --pretty false && tsc -p apps/agent/tsconfig.type-tests.json --pretty false",
+    "test": "npm run build && vitest run",
+    "test:smoke": "npm run build && node apps/agent/dist/smoke/cli.js smoke",
+    "test:conformance": "npm run build && node apps/agent/dist/smoke/cli.js conformance",
+    "clean": "node --input-type=module --eval \"import { rmSync } from 'node:fs'; for (const path of ['packages/server-host/dist', 'apps/agent/dist', 'apps/cli/dist', 'packages/benchmark/dist', 'build/tasks', 'runtime/sdk/typescript/dist', 'runtime/sdk/typescript/.tsbuildinfo']) rmSync(path, { recursive: true, force: true });\""
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

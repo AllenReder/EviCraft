@@ -1,0 +1,108 @@
+plugins {
+    id 'multiloader-common'
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    neoFormVersion = neo_form_version
+    // Automatically enable AccessTransformers if the file exists
+    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
+}
+
+dependencies {
+    // The api module engine (project dependency on the in-repo api/ tree). compileOnly:
+    // the api classes are provided at runtime by the api module mod, not bundled.
+    compileOnly project(':api:common')
+    // Unit tests exercise the engine classes (the scheduler ships with api), so add the module at test runtime.
+    testImplementation project(':api:common')
+
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+    // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
+    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.3'
+    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.3'
+
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.sourceDirectories.singleFile
+    commonResources sourceSets.main.resources.sourceDirectories.singleFile
+}
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
+    configurations.named("$variant") {
+        attributes {
+            attribute(loaderAttribute, 'common')
+        }
+    }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant->
+        configurations.named("$variant") {
+            attributes {
+                attribute(loaderAttribute, 'common')
+            }
+        }
+    }
+}
+
+sourceSets {
+    test {
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// Server-safety gate: everything in core's common source set is server code (tools, tasks, pathing,
+// building); the client half lives in the api module. common compiles against the merged client jar, so an
+// accidental net.minecraft.client import compiles but fails with ClassNotFound on a dedicated server. This
+// check fails the build instead. Client code belongs in a src/client/java source set, as in the api module.
+tasks.register('checkServerSafe') {
+    group = 'verification'
+    description = 'Fail if src/main references Minecraft client-only classes.'
+    def srcDir = file('src/main/java')
+    inputs.dir(srcDir)
+    outputs.upToDateWhen { false }
+    doLast {
+        def offenders = []
+        srcDir.eachFileRecurse(groovy.io.FileType.FILES) { f ->
+            if (!f.name.endsWith('.java')) return
+            int no = 0
+            f.eachLine('UTF-8') { line ->
+                no++
+                if (line.contains('net.minecraft.client') || line.contains('com.mojang.blaze3d')) {
+                    offenders << "${f}:${no}: ${line.trim()}"
+                }
+            }
+        }
+        if (!offenders.isEmpty()) {
+            throw new GradleException(
+                    "src/main references Minecraft client classes (absent on a dedicated server; causes ClassNotFound).\n"
+                    + "core module common must stay server-only; client features belong in the api module:\n  "
+                    + offenders.join('\n  '))
+        }
+    }
+}
+tasks.named('check') { dependsOn 'checkServerSafe' }

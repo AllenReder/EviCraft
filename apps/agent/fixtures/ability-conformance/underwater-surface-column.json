@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "underwater-surface-column",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {},
+  "structureFixture": {
+    "id": "sealed-water-column",
+    "version": 1,
+    "origin": { "x": -1, "y": 100, "z": -1 }
+  }
+}

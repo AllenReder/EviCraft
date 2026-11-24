@@ -1,0 +1,39 @@
+name: Full NeoForge conformance
+
+on:
+  # Manual only: on 2-core runners, observation.observe can exceed the SDK's 30s default request timeout.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: full-conformance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          cache: npm
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v5
+      - run: npm ci
+      - run: npm run test:conformance
+      - run: npx evicraft setup --accept-eula --no-camera
+      - run: npx evicraft check
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: full-conformance-failure
+          path: |
+            build/neoforge-smoke-runs
+            build/ability-conformance*

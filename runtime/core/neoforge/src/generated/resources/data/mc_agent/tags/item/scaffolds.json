@@ -1,0 +1,27 @@
+{
+  "values": [
+    "minecraft:cobblestone",
+    "minecraft:dirt",
+    "minecraft:cobbled_deepslate",
+    "minecraft:stone",
+    "minecraft:netherrack",
+    "minecraft:andesite",
+    "minecraft:diorite",
+    "minecraft:granite",
+    "minecraft:tuff",
+    "minecraft:deepslate",
+    "minecraft:coarse_dirt",
+    "minecraft:rooted_dirt",
+    "minecraft:podzol",
+    "minecraft:mud",
+    "minecraft:mossy_cobblestone",
+    "minecraft:grass_block",
+    "minecraft:mycelium",
+    "minecraft:calcite",
+    "minecraft:blackstone",
+    "minecraft:basalt",
+    "minecraft:soul_soil",
+    "minecraft:end_stone",
+    "minecraft:snow_block"
+  ]
+}

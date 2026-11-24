@@ -1,0 +1,12 @@
+{
+  "encoding": "observation-partition-replace",
+  "encodingVersion": 1,
+  "partitions": [
+    "actor",
+    "inventory",
+    "evaluation.location",
+    "evaluation.advancements",
+    "evaluation.nearbyPortals",
+    "actorDeathCount"
+  ]
+}

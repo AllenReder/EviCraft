@@ -1,0 +1,83 @@
+# Item Discovery main experiment, Qwen3.8 27B: seeds 100–109, G/L interleaved, 5 repetitions per config, 100 Attempts, shared concurrency 50, 144,000 ticks.
+concurrency: 50
+instances:
+  - id: discovery-qwen-3-8-27b-s100-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s100-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s100-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s100-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s101-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s101-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s101-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s101-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s102-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s102-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s102-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s102-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s103-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s103-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s103-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s103-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s104-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s104-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s104-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s104-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s105-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s105-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s105-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s105-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s106-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s106-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s106-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s106-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s107-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s107-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s107-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s107-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s108-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s108-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s108-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s108-l.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s109-g
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s109-g.json
+    repetitions: 5
+  - id: discovery-qwen-3-8-27b-s109-l
+    taskPath: ../..
+    configPath: qwen-3.8-27b-s109-l.json
+    repetitions: 5

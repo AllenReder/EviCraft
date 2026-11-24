@@ -1,0 +1,17 @@
+{
+  "revision": "2",
+  "seed": "108",
+  "sha256": "b7405b014e5c7fa669919f24cc0911c315853a89d2d7667c696e6b7483660438",
+  "spawn": {
+    "dimension": "minecraft:overworld",
+    "x": -132.5,
+    "y": 70,
+    "z": -63.5,
+    "yaw": 0,
+    "pitch": 0
+  },
+  "feasibility": {
+    "status": "pending",
+    "receipt": null
+  }
+}

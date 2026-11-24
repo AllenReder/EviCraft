@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "cross-dimension-task-switch",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "nether_target": {
+      "blockId": "minecraft:gold_block",
+      "dimension": "minecraft:the_nether",
+      "position": { "x": 4, "y": 101, "z": 0 },
+      "initiallyVisible": false
+    }
+  }
+}

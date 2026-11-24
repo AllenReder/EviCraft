@@ -1,0 +1,19 @@
+{
+  "serverTemplatePath": "../../../../build/survival-server",
+  "serverCommand": ["node", "launch.mjs"],
+  "snapshotPath": "../../snapshots/seed-100-v1",
+  "profile": "grounded_evidence",
+  "tickBudget": 2400,
+  "harness": {
+    "command": ["node", "../../../../apps/agent/dist/cli.js"],
+    "config": {
+      "model": {
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "limits": { "contextWindowTokens": 262144, "maxOutputTokens": 65536 }
+      },
+      "mode": "code",
+      "skillsPath": "../../../../apps/agent/project-skills"
+    }
+  }
+}

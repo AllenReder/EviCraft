@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../build/tasks",
+    "tsBuildInfoFile": "../build/tasks/.tsbuildinfo",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true
+  },
+  "references": [
+    {
+      "path": "../packages/benchmark"
+    },
+    {
+      "path": "../apps/agent"
+    }
+  ],
+  "include": [
+    "**/*.ts",
+    "minecraft-common/observation-format.json"
+  ]
+}

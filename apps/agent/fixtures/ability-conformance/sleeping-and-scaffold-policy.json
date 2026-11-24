@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "sleeping-and-scaffold-policy",
+  "difficulty": "peaceful",
+  "sharedSpawn": { "x": 0, "y": 101, "z": 0 },
+  "fixtures": {
+    "bed_foot": {
+      "blockId": "minecraft:red_bed",
+      "position": { "x": 2, "y": 101, "z": 0 },
+      "state": { "part": "foot", "facing": "east" }
+    },
+    "bed_head": {
+      "blockId": "minecraft:red_bed",
+      "position": { "x": 3, "y": 101, "z": 0 },
+      "state": { "part": "head", "facing": "east" }
+    },
+    "nether_bed_foot": {
+      "blockId": "minecraft:red_bed",
+      "dimension": "minecraft:the_nether",
+      "position": { "x": 0, "y": 101, "z": 0 },
+      "state": { "part": "foot", "facing": "east" },
+      "initiallyVisible": false
+    },
+    "nether_bed_head": {
+      "blockId": "minecraft:red_bed",
+      "dimension": "minecraft:the_nether",
+      "position": { "x": 1, "y": 101, "z": 0 },
+      "state": { "part": "head", "facing": "east" },
+      "initiallyVisible": false
+    }
+  }
+}
