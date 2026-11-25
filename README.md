@@ -1,4 +1,12 @@
-# EviCraft
+<h1 align="center">EviCraft</h1>
+
+<p align="center"><b>EviCraft: Can Minecraft Agents Find What They Cannot See?</b></p>
+
+<p align="center">
+  <a href="https://arxiv.org/abs/2611.32765"><img src="https://img.shields.io/badge/arXiv-2611.32765-b31b1b.svg?logo=arxiv&logoColor=white" alt="arXiv 2611.32765"></a>
+  <a href="https://arxiv.org/pdf/2611.32765"><img src="https://img.shields.io/badge/Paper-PDF-red.svg" alt="Paper PDF"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License"></a>
+</p>
 
 ![EviCraft paper teaser comparing G and L](assets/teaser.png)
 
@@ -7,7 +15,9 @@ their tools reason from what the Bot observes as it explores. Run your agent on
 [Survival](tasks/minecraft-survival/README.md) or [Item Discovery](tasks/minecraft-item-discovery/README.md),
 or build new tasks on the same Runtime and Runner.
 
-Companion repository for *EviCraft: Can Minecraft Agents Find What They Cannot See?*
+This is the companion repository for the paper
+[*EviCraft: Can Minecraft Agents Find What They Cannot See?*](https://arxiv.org/abs/2611.32765)
+(arXiv:2611.32765).
 
 **Contents:** [Quick start](#quick-start) · [How it works](#how-it-works) ·
 [Evaluating your own Harness](#evaluating-your-own-harness) ·
@@ -163,7 +173,19 @@ npm run test:conformance                  # NeoForge conformance scenarios
 
 ## Citation
 
-The arXiv link and BibTeX entry will be added here once the paper is public.
+If you use EviCraft, please cite the paper ([arXiv:2611.32765](https://arxiv.org/abs/2611.32765)):
+
+```bibtex
+@misc{yi2026evicraft,
+  title         = {EviCraft: Can Minecraft Agents Find What They Cannot See?},
+  author        = {Yi, Wenyou and Zhang, Lantian and Chen, Guanlin and Xu, Xingqiu and Sun, Haiyang and Huang, Minrui and Liang, Tianle and Chen, Hao and Xu, Haorui and Zhao, Zhou},
+  year          = {2026},
+  eprint        = {2611.32765},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2611.32765}
+}
+```
 
 ## License
 
